@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Home Page</title>   
+    </head>
+  <body>
+      <a href="/login/logout" style = "float:right">logout</a>
+      <h1>Hello {{user.name}}!</h1>
+      <p>Your wishlist:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Added By</th>
+                    <th>Date Added</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% for item in wish_list_items %}
+                    <tr>
+                        <td><a href = "/wish_items/{{item.id}}">{{item.name}}</a></td>
+                        <td>{{item.added_by}}</td>
+                        <td>{{item.date_added}}</td>
+                        {% if item.added_by == user.name %}
+                        <td><a href = "/wish_items/{{item.id}}/delete">Delete</a></td>
+                        {% else %}
+                        <td><a href = "/wish_items/{{item.id}}/remove">Remove from Wishlist</a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Other user's wish items</h2>
+        <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Added By</th>
+                        <th>Date Added</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for item in non_wish_items %}
+                        <tr>
+                            <td>{{item.name}}</td>
+                            <td>{{item.added_by}}</td>
+                            <td>{{item.date_added}}</td>
+                            <td><a href = "/wish_items/{{item.id}}/add">Add Item to Wishlist</a></td>
+                        </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+      <a href="wish_items/create" style = "float:right">Create Item</a>
+  </body>
+</html>
